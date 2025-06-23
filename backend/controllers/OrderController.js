@@ -1,0 +1,63 @@
+import { validationResult } from "express-validator";
+import Order from "../models/Order.js";
+import User from "../models/User.js";
+
+export const createOrder = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json(errors.array());
+    }
+
+    const { fullname, address, city, state, code, country, phone } = req.body;
+
+    const order = new Order({
+      fullname,
+      address,
+      city,
+      state,
+      code,
+      country,
+      phone,
+    });
+
+    await order.save();
+
+    await User.findByIdAndUpdate(req.userId, {
+      $push: { order },
+    });
+
+    res.json(order);
+  } catch (err) {
+    console.log(err);
+    res.json({
+      message: "Не удалось зарегистрировать заказ",
+    });
+  }
+};
+
+export const getAll = async (req, res) => {
+  try {
+    const orders = await Order.find();
+
+    res.json(orders);
+  } catch (err) {
+    console.log(err);
+    res.json({
+      message: "Не удалось получить все заказы",
+    });
+  }
+};
+
+export const getOneOrder = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    res.json(order);
+  } catch (err) {
+    console.log(err);
+    res.json({
+      message: "Не удалось получить определнный заказ",
+    });
+  }
+};
