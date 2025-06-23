@@ -30,7 +30,7 @@ const CartPage: React.FC = () => {
     dispatch(fetchUserCart(dataAuth?._id));
   };
 
-  if (cart.length === 0) {
+  if (cart[0].sneaker === null) {
     return (
       <div className="bg-dark min-h-screen py-12">
         <div className="container mx-auto px-4">
