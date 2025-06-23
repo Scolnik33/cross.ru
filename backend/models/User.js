@@ -7,10 +7,10 @@ const UserSchema = new mongoose.Schema(
     password: { type: String, required: true },
     role: { type: String, default: "customer" },
     order: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
-    wish: [{ type: mongoose.Schema.Types.ObjectId, ref: "Sneaker" }],
+    wish: [{ type: mongoose.Schema.Types.ObjectId, ref: "Sneakers" }],
     cart: [
       {
-        sneaker: { type: mongoose.Schema.Types.ObjectId, ref: "Sneaker" },
+        sneaker: { type: mongoose.Schema.Types.ObjectId, ref: "Sneakers" },
         quantity: { type: Number, default: 1 },
       },
     ],

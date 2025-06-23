@@ -51,11 +51,11 @@ const CartPage: React.FC = () => {
                         {/* Product */}
                         <div className="col-span-6 flex items-center">
                           <div className="w-20 h-20 bg-dark-surface rounded overflow-hidden flex-shrink-0">
-                            {/* <img
+                            <img
                               src={item.sneaker.image}
                               alt={item.sneaker.name}
                               className="w-full h-full object-cover"
-                            /> */}
+                            />
                           </div>
                           <div className="ml-4">
                             <Link
