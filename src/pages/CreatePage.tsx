@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import { AppDispatch } from "../redux/store";
 import { authData } from "../redux/slices/auth";
 
 const CreateSneakerPage: React.FC = () => {
+  const [file, setFile] = useState<File | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const auth = useSelector(authData);
@@ -21,16 +22,50 @@ const CreateSneakerPage: React.FC = () => {
     mode: "onSubmit",
   });
 
+  const uploadFile = async (file: File): Promise<string | null> => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await fetch("http://localhost:3000/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      return data.url;
+    } catch (error) {
+      alert("Ошибка загрузки файла");
+      return null;
+    }
+  };
+
   const onSubmit = async (values: any) => {
-    values.user = auth?._id;
-    const data = await dispatch(fetchCreateSneaker(values));
+    let imageUrl = "";
+
+    if (file) {
+      const uploadedUrl = await uploadFile(file);
+      if (!uploadedUrl) {
+        return alert("Ошибка загрузки изображения");
+      }
+      imageUrl = uploadedUrl;
+    } else {
+      return alert("Пожалуйста, выберите изображение");
+    }
+
+    const sneakerData = {
+      ...values,
+      image: imageUrl,
+      user: auth?._id,
+    };
+
+    const data = await dispatch(fetchCreateSneaker(sneakerData));
     const payload = data.payload;
 
     if (!payload) {
       return alert("Не удалось создать кроссовок.");
     }
 
-    alert("Кроссовок успешно создан!");
     navigate("/");
   };
 
@@ -162,11 +197,14 @@ const CreateSneakerPage: React.FC = () => {
                   URL изображения
                 </label>
                 <input
-                  type="text"
+                  type="file"
                   id="image"
-                  {...register("image", { required: "Обязательное поле" })}
-                  className="w-full bg-dark border border-dark-border rounded-md py-2 px-3 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
-                  placeholder="https://..."
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      setFile(e.target.files[0]);
+                    }
+                  }}
+                  className="..."
                 />
                 {errors.image && (
                   <p className="text-red-500 text-sm">{errors.image.message}</p>
