@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import multer from "multer";
 import cors from "cors";
+import dotenv from 'dotenv';
 
 import * as UserController from "./controllers/UserController.js";
 import * as OrderController from "./controllers/OrderController.js";
@@ -11,9 +12,7 @@ import checkAuth from "./utils/checkAuth.js";
 
 const DBconnect = () => {
   mongoose
-    .connect(
-      "mongodb+srv://admin:wwwww@cluster0.e7rvox1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-    )
+    .connect(process.env.MONGO_URI)
     .then(() => {
       console.log("DB ok");
     })
@@ -23,7 +22,8 @@ const DBconnect = () => {
 };
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+dotenv.config();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
