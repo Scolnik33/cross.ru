@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import multer from "multer";
 import cors from "cors";
 import dotenv from 'dotenv';
+dotenv.config();
 
 import * as UserController from "./controllers/UserController.js";
 import * as OrderController from "./controllers/OrderController.js";
@@ -23,7 +24,6 @@ const DBconnect = () => {
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-dotenv.config();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
