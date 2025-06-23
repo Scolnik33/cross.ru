@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: 'https://my-production-api.vercel.app',
+  baseURL: 'https://cross-ru.vercel.app/login',
 });
 
 instance.interceptors.request.use((config) => {
