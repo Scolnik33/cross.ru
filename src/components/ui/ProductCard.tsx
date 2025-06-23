@@ -12,14 +12,16 @@ const ProductCard: React.FC<SneakersType> = ({ _id, name, price, image }) => {
   };
 
   return (
-    <div className="group relative bg-dark-card rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+    <div
+      className="group relative bg-dark-card rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+    >
       {/* Image */}
       <Link
         to={`/products/${_id}`}
         className="block relative overflow-hidden aspect-square"
       >
         <img
-          src={`http://localhost:3000${image}`}
+          src={image}
           alt={name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
