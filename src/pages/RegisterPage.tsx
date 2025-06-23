@@ -35,10 +35,9 @@ const RegisterPage: React.FC = () => {
       return alert("Не удалось зарегистрироваться.");
     }
 
-    // @ts-ignore
-    if ("token" in payload) {
-      // @ts-ignore
-      window.localStorage.setItem("token", payload.token);
+    if (payload && typeof payload === "object" && "token" in payload) {
+      const token = (payload as { token: string }).token;
+      window.localStorage.setItem("token", token);
     }
   };
 

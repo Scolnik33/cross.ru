@@ -3,7 +3,6 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   Search,
   ShoppingBag,
-  Heart,
   User,
   Menu,
   X,
@@ -133,16 +132,6 @@ const Header: React.FC = () => {
               )}
             </Link>
 
-            {isAuth && (
-              <Link
-                to="/wishlist"
-                className="text-light-muted hover:text-primary transition-colors p-1"
-                aria-label="Wishlist"
-              >
-                <Heart size={20} />
-              </Link>
-            )}
-
             <div className="relative">
               <button
                 onClick={toggleProfile}
@@ -163,7 +152,7 @@ const Header: React.FC = () => {
                         </p>
                       </div>
                       <Link
-                        to="/orders"
+                        to={`/orders/${dataAuth?._id}`}
                         className="flex items-center px-4 py-2 text-sm text-light-muted hover:bg-dark-border hover:text-white"
                       >
                         <Package size={16} className="mr-2" />

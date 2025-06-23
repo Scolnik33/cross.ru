@@ -50,13 +50,15 @@ app.post("/upload", upload.single("image"), (req, res) => {
   });
 });
 
-app.get("/getOrders", OrderController.getAll);
+app.get("/getOrders/:id", OrderController.getAll);
+app.get("/getAllOrders", OrderController.getAllOrders);
 app.post("/createOrder", checkAuth, OrderController.createOrder);
 
 app.get("/getSneakers", SneakersController.getAll);
 app.get("/getOneSneaker/:id", SneakersController.getOneSneaker);
 app.get("/getWish/:id", checkAuth, SneakersController.getWish);
 app.get("/getCart/:id", SneakersController.getCart);
+app.delete("/deleteFromCart/:id/:sneakerId", SneakersController.deleteFromCart);
 app.post("/createSneaker", checkAuth, SneakersController.createSneakers);
 app.post("/addSneakerToWish/:id/:sneakerId", checkAuth, SneakersController.addSneakerToWish);
 app.post("/addSneakerToCart/:id/:sneakerId", SneakersController.addSneakerToCart);

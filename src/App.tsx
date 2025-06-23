@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import LoadingSpinner from './components/ui/LoadingSpinner';
@@ -6,13 +6,15 @@ import { useAuth } from './contexts/AuthContext';
 import AdminRoute from './components/routes/AdminRoute';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import CreatePage from './pages/CreatePage';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from './redux/store';
+import { fetchGetMe } from './redux/slices/auth';
 
 // Lazy-loaded pages
 const HomePage = lazy(() => import('./pages/HomePage'));
 const ProductsPage = lazy(() => import('./pages/ProductsPage'));
 const ProductDetailPage = lazy(() => import('./pages/ProductDetailPage'));
 const CartPage = lazy(() => import('./pages/CartPage'));
-const WishlistPage = lazy(() => import('./pages/WishlistPage'));
 const OrdersPage = lazy(() => import('./pages/OrdersPage'));
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
@@ -27,6 +29,11 @@ const AdminCustomers = lazy(() => import('./pages/admin/Customers'));
 
 function App() {
   const { isLoading } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(fetchGetMe());
+  }, []);
 
   if (isLoading) {
     return <LoadingSpinner fullScreen />;
@@ -41,15 +48,7 @@ function App() {
             <Route path="products/:id" element={<ProductDetailPage />} />
             <Route path="cart" element={<CartPage />} />
             <Route
-                path="wishlist"
-                element={
-                  <ProtectedRoute>
-                    <WishlistPage />
-                  </ProtectedRoute>
-                }
-            />
-            <Route
-                path="orders"
+                path="orders/:id"
                 element={
                   <ProtectedRoute>
                     <OrdersPage />

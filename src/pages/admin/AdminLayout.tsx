@@ -92,7 +92,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
               Заказы
             </NavLink>
 
-            <NavLink
+            {/* <NavLink
               to="/admin/customers"
               className={({ isActive }) => `
                 flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors
@@ -106,7 +106,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
             >
               <Users size={18} className="mr-3" />
               Клиенты
-            </NavLink>
+            </NavLink> */}
           </nav>
 
           <div className="absolute bottom-8 left-0 right-0 px-4">

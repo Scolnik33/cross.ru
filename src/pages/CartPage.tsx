@@ -5,12 +5,13 @@ import Button from "../components/ui/Button";
 import { useCart } from "../contexts/CartContext";
 import { useDispatch, useSelector } from "react-redux";
 import { authData } from "../redux/slices/auth";
-import { fetchUserCart, selectCart } from "../redux/slices/sneaker";
+import { deleteFromCart, fetchUserCart, selectCart } from "../redux/slices/sneaker";
+import { AppDispatch } from "../redux/store";
 
 const CartPage: React.FC = () => {
   const { items, removeFromCart, updateQuantity, total, clearCart } = useCart();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const dataAuth = useSelector(authData);
   const cart = useSelector(selectCart);
 
@@ -18,6 +19,13 @@ const CartPage: React.FC = () => {
     // @ts-ignore
     dispatch(fetchUserCart(dataAuth?._id));
   }, []);
+
+  const remove = (sneakerId: string) => {
+    dispatch(deleteFromCart({ id: dataAuth?._id, sneakerId }));
+    // @ts-ignore
+    dispatch(fetchUserCart(dataAuth?._id));
+  }
+
 
   return (
     <div className="bg-dark min-h-screen py-12">
@@ -124,7 +132,8 @@ const CartPage: React.FC = () => {
                         {/* Remove button */}
                         <div className="col-span-1 flex justify-end">
                           <button
-                            // onClick={() => removeFromCart(item.sneaker.product.id)}
+                          // @ts-ignore
+                            onClick={() => remove(item._id)}
                             className="text-light-muted hover:text-red-500 transition-colors p-1"
                             aria-label="Remove item"
                           >
@@ -135,26 +144,6 @@ const CartPage: React.FC = () => {
                     </div>
                   ))}
                 </div>
-              </div>
-
-              {/* Continue Shopping and Clear Cart buttons */}
-              <div className="flex flex-col sm:flex-row justify-between mt-6 gap-4">
-                <Button
-                  variant="outline"
-                  size="md"
-                  onClick={() => navigate("/products")}
-                >
-                  Продолжить покупки
-                </Button>
-
-                <Button
-                  variant="ghost"
-                  size="md"
-                  onClick={clearCart}
-                  icon={<Trash2 size={18} />}
-                >
-                  Очистить корзину
-                </Button>
               </div>
             </div>
 

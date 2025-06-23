@@ -31,6 +31,7 @@ const ProductDetailPage: React.FC = () => {
 
   const handleAddToCart = () => {
     dispatch(addSneakerToCart({ userId: dataAuth?._id, sneakerId: id || "" }));
+    navigate('/')
   };
 
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ import User from '../models/User.js'
 
 export const getme = async (req, res) => {
     try {
-        const user = await User.findById(req.userId).populate(['favorities', 'company']);
+        const user = await User.findById(req.userId);
 
         if (!user) {
             return res.status(404).json({

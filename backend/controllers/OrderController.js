@@ -9,14 +9,15 @@ export const createOrder = async (req, res) => {
       return res.status(400).json(errors.array());
     }
 
-    const { fullname, address, city, state, code, country, phone } = req.body;
+    const { fullName, addressLine1, city, state, postalCode, country, phone } =
+      req.body;
 
     const order = new Order({
-      fullname,
-      address,
+      fullname: fullName,
+      address: addressLine1,
       city,
       state,
-      code,
+      code: postalCode,
       country,
       phone,
     });
@@ -38,9 +39,19 @@ export const createOrder = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const orders = await Order.find();
+    const userId = req.params.id;
 
-    res.json(orders);
+    if (!userId) {
+      return res.status(401).json({ message: "Пользователь не авторизован" });
+    }
+
+    const user = await User.findById(userId).populate("order");
+
+    if (!user) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
+
+    res.json(user.order); 
   } catch (err) {
     console.log(err);
     res.json({
@@ -58,6 +69,18 @@ export const getOneOrder = async (req, res) => {
     console.log(err);
     res.json({
       message: "Не удалось получить определнный заказ",
+    });
+  }
+};
+
+export const getAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find().sort({ createdAt: -1 });
+    res.json(orders);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Не удалось получить список заказов",
     });
   }
 };

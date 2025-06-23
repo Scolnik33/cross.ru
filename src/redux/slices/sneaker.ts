@@ -99,6 +99,15 @@ export const fetchUserCart = createAsyncThunk(
   }
 );
 
+export const deleteFromCart = createAsyncThunk<
+  { message: any; user: AuthType },
+  { id: any; sneakerId: any }
+>("cart/removeSneaker", async ({ id, sneakerId }) => {
+  const { data } = await axios.delete(`/deleteFromCart/${id}/${sneakerId}`);
+  return data;
+});
+
+
 const initialState: SneakersSLiceState = {
   sneakers: {
     itemsSneakers: [],
@@ -248,6 +257,18 @@ const sneakersSlice = createSlice({
         })
         .addCase(fetchUserCart.rejected, (state) => {
           state.sneakers.itemsSneakers = [];
+          state.sneakers.statusSneakers = Status.ERROR;
+        }),
+      builder
+        .addCase(deleteFromCart.pending, (state) => {
+          state.sneakers.statusSneakers = Status.LOADING;
+        })
+        .addCase(deleteFromCart.fulfilled, (state, action) => {
+          // @ts-ignore
+          state.user.cart = action.payload.user.cart;
+          state.sneakers.statusSneakers = Status.SUCCESS;
+        })
+        .addCase(deleteFromCart.rejected, (state) => {
           state.sneakers.statusSneakers = Status.ERROR;
         });
   },

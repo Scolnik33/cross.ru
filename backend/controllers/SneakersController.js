@@ -1,6 +1,7 @@
 import { validationResult } from "express-validator";
 import Sneakers from "../models/Sneakers.js";
 import User from "../models/User.js";
+import mongoose from "mongoose";
 
 export const createSneakers = async (req, res) => {
   try {
@@ -45,6 +46,31 @@ export const createSneakers = async (req, res) => {
     });
   }
 };
+
+export const deleteFromCart = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const sneakerId = req.params.sneakerId;
+
+    const sneakerObjectId = new mongoose.Types.ObjectId(sneakerId);
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { cart: { sneaker: sneakerObjectId } } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "Пользователь не найден" });
+    }
+
+    res.json({ message: "Товар удалён из корзины", cart: user.cart });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Ошибка при удалении товара из корзины" });
+  }
+};
+
 
 export const getAll = async (req, res) => {
   try {

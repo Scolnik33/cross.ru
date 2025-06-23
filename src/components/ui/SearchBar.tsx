@@ -3,6 +3,8 @@ import { Search, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { searchProducts } from '../../data/products';
 import { Product } from '../../types/product';
+import { useSelector } from 'react-redux';
+import { selectSneakers } from '../../redux/slices/sneaker';
 
 interface SearchBarProps {
   onClose?: () => void;
@@ -14,6 +16,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+
+  const { itemsSneakers } = useSelector(selectSneakers);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -83,15 +87,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ onClose }) => {
                   <div className="p-4 text-center text-light-muted">Поиск...</div>
               ) : results.length > 0 ? (
                   <ul>
-                    {results.map((product) => (
-                        <li key={product.id} className="border-b border-dark-border last:border-none">
+                    {itemsSneakers.map((product) => (
+                        <li key={product._id} className="border-b border-dark-border last:border-none">
                           <button
-                              onClick={() => handleProductClick(product.id)}
+                          //@ts-ignore
+                              onClick={() => handleProductClick(product?._id)}
                               className="flex items-center p-3 w-full text-left hover:bg-dark-border transition-colors"
                           >
                             <div className="w-12 h-12 bg-dark-surface rounded overflow-hidden flex-shrink-0">
                               <img
-                                  src={product.images[0]}
+                                  src={product.image}
                                   alt={product.name}
                                   className="w-full h-full object-cover"
                               />
