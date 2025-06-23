@@ -4,17 +4,20 @@ import { ShoppingBag } from "lucide-react";
 import { useCart } from "../../contexts/CartContext";
 import Button from "./Button";
 import { SneakersType } from "../../types/SneakersType";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { authData } from "../../redux/slices/auth";
+import { addSneakerToCart } from "../../redux/slices/sneaker";
 
 const ProductCard: React.FC<SneakersType> = ({ _id, name, price, image }) => {
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const dispatch = useDispatch<AppDispatch>();
+  const dataAuth = useSelector(authData);
+  const handleAddToCart = () => {
+    dispatch(addSneakerToCart({ userId: dataAuth?._id, sneakerId: _id || "" }));
   };
 
   return (
-    <div
-      className="group relative bg-dark-card rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
-    >
+    <div className="group relative bg-dark-card rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
       {/* Image */}
       <Link
         to={`/products/${_id}`}
