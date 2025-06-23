@@ -5,7 +5,11 @@ import Button from "../components/ui/Button";
 import { useCart } from "../contexts/CartContext";
 import { useDispatch, useSelector } from "react-redux";
 import { authData } from "../redux/slices/auth";
-import { deleteFromCart, fetchUserCart, selectCart } from "../redux/slices/sneaker";
+import {
+  deleteFromCart,
+  fetchUserCart,
+  selectCart,
+} from "../redux/slices/sneaker";
 import { AppDispatch } from "../redux/store";
 
 const CartPage: React.FC = () => {
@@ -24,8 +28,31 @@ const CartPage: React.FC = () => {
     dispatch(deleteFromCart({ id: dataAuth?._id, sneakerId }));
     // @ts-ignore
     dispatch(fetchUserCart(dataAuth?._id));
-  }
+  };
 
+  if (cart.length === 0) {
+    return (
+      <div className="bg-dark min-h-screen py-12">
+        <div className="container mx-auto px-4">
+          <h1 className="text-3xl font-bold text-white mb-8">Корзина</h1>
+          <div className="flex flex-col items-center">
+            <ShoppingBag className="w-16 h-16 text-primary" />
+            <p className="text-lg text-white mt-4">Ваша корзина пуста</p>
+            <p className="text-light-muted mt-2">
+              Похоже, вы еще не добавили ни одного товара в корзину
+            </p>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => navigate("/products")}
+            >
+              Перейти в магазин
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-dark min-h-screen py-12">
@@ -132,7 +159,7 @@ const CartPage: React.FC = () => {
                         {/* Remove button */}
                         <div className="col-span-1 flex justify-end">
                           <button
-                          // @ts-ignore
+                            // @ts-ignore
                             onClick={() => remove(item._id)}
                             className="text-light-muted hover:text-red-500 transition-colors p-1"
                             aria-label="Remove item"
