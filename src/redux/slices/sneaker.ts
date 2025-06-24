@@ -166,8 +166,8 @@ const sneakersSlice = createSlice({
       }),
       builder.addCase(
         fetchCreateSneaker.fulfilled,
-        (state, action: PayloadAction<SneakersType[]>) => {
-          state.sneakers.itemsSneakers = action.payload;
+        (state, action: PayloadAction<SneakersType>) => {
+          state.sneakers.itemsSneakers.push(action.payload);;
           state.sneakers.statusSneakers = Status.SUCCESS;
         }
       ),
