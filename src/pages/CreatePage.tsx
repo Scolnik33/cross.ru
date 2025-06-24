@@ -22,7 +22,7 @@ const CreateSneakerPage: React.FC = () => {
   });
 
   const onSubmit = async (values: any) => {
-    //@ts-ignore
+    // @ts-ignore
     values.user = data?._id;
     const data = await dispatch(fetchCreateSneaker(values));
     const payload = data.payload;
