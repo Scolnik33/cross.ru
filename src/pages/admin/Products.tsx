@@ -233,19 +233,6 @@ const ProductsPage: React.FC = () => {
                       >
                         <Eye size={18} />
                       </button>
-                      <button
-                        className="text-light-muted hover:text-primary transition-colors"
-                        aria-label="Редактировать товар"
-                      >
-                        <Edit size={18} />
-                      </button>
-                      <button
-                        className="text-light-muted hover:text-red-500 transition-colors"
-                        aria-label="Удалить товар"
-                        // onClick={() => handleDeleteClick(product)}
-                      >
-                        <Trash2 size={18} />
-                      </button>
                     </div>
                   </td>
                 </tr>
