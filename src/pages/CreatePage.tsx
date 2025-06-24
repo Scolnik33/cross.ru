@@ -11,7 +11,7 @@ import { authData } from "../redux/slices/auth";
 const CreateSneakerPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const data = useSelector(authData);
+  const dataAuth = useSelector(authData);
 
   const {
     register,
@@ -22,8 +22,7 @@ const CreateSneakerPage: React.FC = () => {
   });
 
   const onSubmit = async (values: any) => {
-    // @ts-ignore
-    values.user = data?._id;
+    values.user = dataAuth?._id;
     const data = await dispatch(fetchCreateSneaker(values));
     const payload = data.payload;
 
