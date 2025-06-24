@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Filter, SlidersHorizontal, X } from 'lucide-react';
+import React, {  useEffect } from 'react';
+import { Filter, SlidersHorizontal } from 'lucide-react';
 import ProductCard from '../components/ui/ProductCard';
 import Button from '../components/ui/Button';
-import { products, getAllCategories, getAllBrands } from '../data/products';
-import { Product, ProductFilter } from '../types/product';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSneakers, selectSneakers } from '../redux/slices/sneaker';
 import { AppDispatch } from '../redux/store';

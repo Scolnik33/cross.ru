@@ -30,30 +30,6 @@ const CartPage: React.FC = () => {
     dispatch(fetchUserCart(dataAuth?._id));
   };
 
-  if (cart[0].sneaker === null) {
-    return (
-      <div className="bg-dark min-h-screen py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold text-white mb-8">Корзина</h1>
-          <div className="flex flex-col items-center">
-            <ShoppingBag className="w-16 h-16 text-primary" />
-            <p className="text-lg text-white mt-4">Ваша корзина пуста</p>
-            <p className="text-light-muted mt-2">
-              Похоже, вы еще не добавили ни одного товара в корзину
-            </p>
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => navigate("/products")}
-            >
-              Перейти в магазин
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="bg-dark min-h-screen py-12">
       <div className="container mx-auto px-4">

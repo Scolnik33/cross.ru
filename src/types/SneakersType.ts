@@ -9,6 +9,7 @@ export interface SneakersType {
   size: string;
   color: string;
   quantity: number;
+  sneaker: SneakersType;
   createdAt?: Date;
   updatedAt?: Date;
 }

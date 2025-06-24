@@ -40,19 +40,19 @@ const ProductDetailPage: React.FC = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
 
-  if (!itemsSneakers) {
-    return (
-      <div className="container mx-auto px-4 py-12 text-center">
-        <h1 className="text-2xl font-bold text-white mb-4">Товар не найден</h1>
-        <p className="text-light-muted mb-6">
-          Продукт, который вы ищете, не существует или был удален.
-        </p>
-        <Button variant="primary" onClick={() => navigate("/products")}>
-          Обратно к товарам
-        </Button>
-      </div>
-    );
-  }
+  // if (!itemsSneakers) {
+  //   return (
+  //     <div className="container mx-auto px-4 py-12 text-center">
+  //       <h1 className="text-2xl font-bold text-white mb-4">Товар не найден</h1>
+  //       <p className="text-light-muted mb-6">
+  //         Продукт, который вы ищете, не существует или был удален.
+  //       </p>
+  //       <Button variant="primary" onClick={() => navigate("/products")}>
+  //         Обратно к товарам
+  //       </Button>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="bg-dark min-h-screen py-12">
