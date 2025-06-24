@@ -50,7 +50,7 @@ export const fetchUpdateSneaker = createAsyncThunk<
 export const fetchCreateSneaker = createAsyncThunk(
   "createSneaker",
   async (params) => {
-    const { data } = await axios.post<SneakersType[]>("/createSneaker", params);
+    const { data } = await axios.post<SneakersType>("/createSneaker", params);
 
     return data;
   }
