@@ -25,6 +25,8 @@ const ProductDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const itemsSneakers = sneakers.itemsSneakers[0];
 
+  console.log(itemsSneakers)
+
   useEffect(() => {
     dispatch(fetchOneSneaker(id || ""));
   }, []);
@@ -53,6 +55,14 @@ const ProductDetailPage: React.FC = () => {
   //     </div>
   //   );
   // }
+  
+  if (!itemsSneakers) {
+  return (
+    <div className="text-white text-center py-20">
+      Загрузка товара...
+    </div>
+  );
+}
 
   return (
     <div className="bg-dark min-h-screen py-12">
